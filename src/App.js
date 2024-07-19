@@ -1,25 +1,25 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import AnimeList from './AnimeList';
+import AnimeSearch from './AnimeSearch';
+import { Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import NavBar from './NavBar';
 
 function App() {
   return (
     <div className="App">
+      <NavBar />
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>GEEKED</h1>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<AnimeSearch />} />
+          <Route path="/rate" element={<AnimeList />} />
+        </Routes>
       </header>
     </div>
-  );
+  );  
 }
 
 export default App;
