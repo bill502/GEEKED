@@ -50,42 +50,59 @@
     text-align: center;
   }
   
-  /* Shared styles for sign-in and sign-up forms */
-  .form-container {
-    max-width: 400px; /* Set a maximum width for the form */
-    width: 90%; /* Ensure it doesn't stretch beyond the container */
-    margin: 0 auto; /* Center the form horizontally */
-    background-color: #444;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Ratings section styles */
+  .ratings-section {
+    margin-top: 20px;
   }
   
-  .form-container h2 {
-    color: #61dafb;
+  .ratings-section ul {
+    list-style: none;
+    padding: 0;
   }
   
-  .form-container input {
-    width: calc(100% - 20px); /* Adjust to fit within the form container padding */
+  .ratings-section li {
+    background-color: #333;
     margin: 10px 0;
     padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #e0e0e0;
+  }
+  
+  .ratings-section h4 {
+    margin: 0 0 10px 0;
+  }
+  
+  .ratings-section img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .ratings-section input {
+    width: 100px;
+    padding: 5px;
+    margin-bottom: 10px;
     border: 1px solid #555;
     border-radius: 5px;
     background-color: #333;
     color: #e0e0e0;
+    text-align: center;
   }
   
-  .form-container button {
-    width: 100%; /* Full width button */
-    padding: 10px;
+  .ratings-section button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    background-color: #61dafb;
     border: none;
     border-radius: 5px;
-    background-color: #61dafb;
-    color: #333;
     cursor: pointer;
   }
   
-  .form-container button:hover {
+  .ratings-section button:hover {
     background-color: #21a1f1;
   }
   

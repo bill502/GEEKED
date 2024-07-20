@@ -5,20 +5,11 @@ import { auth } from './firebase';
 import './Profile.css';  // Make sure this CSS file is created
 
 // Component to display and update user profile information
-function Profile() {
+function Profile({ ratings, setRatings }) {
   const [displayName, setDisplayName] = useState(''); // State to hold the new display name
   const [message, setMessage] = useState(''); // State to hold success/error messages
-  const [userInfo, setUserInfo] = useState(null); // State to hold user information
 
   const { currentUser } = useContext(AuthContext); // Get the current user from AuthContext
-
-  // useEffect to handle auth state changes and update userInfo state
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUserInfo(user);
-    });
-    return () => unsubscribe();
-  }, []);
 
   // Function to handle profile update form submission
   const handleUpdateProfile = async (event) => {
@@ -31,6 +22,20 @@ function Profile() {
         setMessage('Error updating profile: ' + error.message); // Set error message
       }
     }
+  };
+
+  // Function to handle rating change
+  const handleRatingChange = (animeId, newRating) => {
+    const updatedRatings = ratings.map(r => 
+      r.anime.id === animeId ? { ...r, rating: Number(newRating) } : r
+    );
+    setRatings(updatedRatings);
+  };
+
+  // Function to handle removing an anime rating
+  const handleRemoveAnime = (animeId) => {
+    const updatedRatings = ratings.filter(r => r.anime.id !== animeId);
+    setRatings(updatedRatings);
   };
 
   // Display a loading message if currentUser is not available
@@ -52,13 +57,30 @@ function Profile() {
         <button type="submit">Update Profile</button>
       </form>
       {message && <p>{message}</p>}
-      {userInfo && (
-        <div>
-          <h3>Updated Information</h3>
-          <p>Email: {userInfo.email}</p>
-          <p>Display Name: {userInfo.displayName}</p>
-        </div>
-      )}
+
+      <div className="ratings-section">
+        <h3>Your Rated Anime</h3>
+        {ratings.length > 0 ? (
+          <ul>
+            {ratings.map(r => (
+              <li key={r.anime.id}>
+                <h4>{r.anime.title.romaji || r.anime.title.english}</h4>
+                <img src={r.anime.coverImage.large} alt={r.anime.title.romaji} />
+                <p>Rating: {r.rating}</p>
+                <input
+                  type="number"
+                  value={r.rating}
+                  onChange={(e) => handleRatingChange(r.anime.id, e.target.value)}
+                  placeholder="Update rating out of 100"
+                />
+                <button onClick={() => handleRemoveAnime(r.anime.id)}>Remove</button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No rated anime found.</p>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,0 +1,63 @@
+/* AnimeDetail page styles */
+.AnimeDetail {
+    text-align: center;
+    background-color: #444;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    color: #e0e0e0;
+  }
+  
+  .AnimeDetail h2 {
+    color: #61dafb;
+    margin-bottom: 20px;
+  }
+  
+  .AnimeDetail img {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .AnimeDetail p {
+    font-size: 1rem;
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  /* Rating section styles */
+  .rating-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .rating-section input {
+    width: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: #e0e0e0;
+    text-align: center;
+  }
+  
+  .rating-section button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #61dafb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .rating-section button:hover {
+    background-color: #21a1f1;
+  }
+  

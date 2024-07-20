@@ -24,30 +24,16 @@ const SEARCH_ANIME = gql`
   }
 `;
 
-function AnimeSearch() {
+function AnimeSearch({ ratings, setRatings }) {
   const [search, setSearch] = useState('');
   const [selectedAnime, setSelectedAnime] = useState(null);
-  const [ratings, setRatings] = useState([]);
   const { loading, error, data } = useQuery(SEARCH_ANIME, {
     variables: { search },
     skip: !search,
   });
 
-  useEffect(() => {
-    const savedRatings = JSON.parse(localStorage.getItem('animeRatings')) || [];
-    setRatings(savedRatings);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('animeRatings', JSON.stringify(ratings));
-  }, [ratings]);
-
   const handleSearch = (e) => {
     setSearch(e.target.value);
-  };
-
-  const addRating = (anime, rating) => {
-    setRatings([...ratings, { anime, rating }]);
   };
 
   const getRating = (anime) => {
@@ -58,7 +44,12 @@ function AnimeSearch() {
   return (
     <div className="AnimeSearch">
       {selectedAnime ? (
-        <AnimeDetail anime={selectedAnime} onBack={() => setSelectedAnime(null)} />
+        <AnimeDetail
+          anime={selectedAnime}
+          onBack={() => setSelectedAnime(null)}
+          ratings={ratings}
+          setRatings={setRatings}
+        />
       ) : (
         <>
           <h2>Search for an Anime</h2>
@@ -81,9 +72,6 @@ function AnimeSearch() {
                         <h3>{anime.title.romaji || anime.title.english}</h3>
                         <p>Average Score: {anime.averageScore}</p>
                         <p>Your Rating: {getRating(anime)}</p>
-                        <button onClick={() => addRating(anime, prompt('Enter your rating:'))}>
-                          Rate this Anime
-                        </button>
                       </div>
                     </div>
                   ))
