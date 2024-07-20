@@ -1,13 +1,12 @@
 import React from 'react';
-import './App.css';  // Ensure this import is here to apply the styles
+import './App.css';
 
-// Component to display detailed information about a selected anime
 function AnimeDetail({ anime, onBack }) {
   return (
     <div className="AnimeDetail">
       <button onClick={onBack}>Back</button>
       <h2>{anime.title.romaji || anime.title.english}</h2>
-      <img src={anime.coverImage.medium} alt={anime.title.romaji} />
+      <img src={anime.coverImage.large} alt={anime.title.romaji} /> {/* Use large image */}
       <p>{anime.description}</p>
       <p>Episodes: {anime.episodes}</p>
       <p>Genres: {anime.genres.join(', ')}</p>

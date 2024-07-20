@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import AnimeDetail from './AnimeDetail';
-import './App.css';
+import './AnimeSearch.css';
 
 const SEARCH_ANIME = gql`
   query SearchAnime($search: String) {
@@ -13,7 +13,7 @@ const SEARCH_ANIME = gql`
           english
         }
         coverImage {
-          medium
+          large
         }
         averageScore
         description
@@ -71,25 +71,27 @@ function AnimeSearch() {
           {loading && <p>Loading...</p>}
           {error && <p>Error: {error.message}</p>}
           {data && (
-            <ul>
-              {data.Page.media.length > 0 ? (
-                data.Page.media.map((anime) => (
-                  <li key={anime.id} onClick={() => setSelectedAnime(anime)}>
-                    <img src={anime.coverImage.medium} alt={anime.title.romaji} />
-                    <div>
-                      <h3>{anime.title.romaji || anime.title.english}</h3>
-                      <p>Average Score: {anime.averageScore}</p>
-                      <p>Your Rating: {getRating(anime)}</p>
-                      <button onClick={() => addRating(anime, prompt('Enter your rating:'))}>
-                        Rate this Anime
-                      </button>
+            <div className="anime-container">
+              <div className="anime-grid">
+                {data.Page.media.length > 0 ? (
+                  data.Page.media.map((anime) => (
+                    <div key={anime.id} className="anime-card" onClick={() => setSelectedAnime(anime)}>
+                      <img src={anime.coverImage.large} alt={anime.title.romaji} />
+                      <div>
+                        <h3>{anime.title.romaji || anime.title.english}</h3>
+                        <p>Average Score: {anime.averageScore}</p>
+                        <p>Your Rating: {getRating(anime)}</p>
+                        <button onClick={() => addRating(anime, prompt('Enter your rating:'))}>
+                          Rate this Anime
+                        </button>
+                      </div>
                     </div>
-                  </li>
-                ))
-              ) : (
-                <li>No results found</li>
-              )}
-            </ul>
+                  ))
+                ) : (
+                  <p>No results found</p>
+                )}
+              </div>
+            </div>
           )}
         </>
       )}
