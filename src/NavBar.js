@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { auth } from './firebase';
+import { signOut } from 'firebase/auth';
+import { AuthContext } from './AuthContext';
 import './NavBar.css';
 
 function NavBar() {
+  const { currentUser } = useContext(AuthContext);
+
+  const handleSignOut = async () => {
+    await signOut(auth);
+  };
+
   return (
     <nav className="navbar">
       <h1 className="navbar-brand">
@@ -15,10 +24,23 @@ function NavBar() {
         <li>
           <Link to="/rate">Rate</Link>
         </li>
+        {currentUser ? (
+          <li>
+            <button onClick={handleSignOut}>Sign Out</button>
+          </li>
+        ) : (
+          <>
+            <li>
+              <Link to="/signup">Sign Up</Link>
+            </li>
+            <li>
+              <Link to="/signin">Sign In</Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );
 }
 
 export default NavBar;
-

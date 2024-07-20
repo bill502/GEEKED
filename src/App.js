@@ -5,6 +5,8 @@ import AnimeSearch from './AnimeSearch';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import NavBar from './NavBar';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<AnimeSearch />} />
           <Route path="/rate" element={<AnimeList />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
         </Routes>
       </header>
     </div>
