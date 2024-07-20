@@ -7,6 +7,8 @@ import Home from './Home';
 import NavBar from './NavBar';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
+import Profile from './Profile';
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
           <Route path="/rate" element={<AnimeList />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </header>
     </div>

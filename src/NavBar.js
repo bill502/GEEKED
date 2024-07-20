@@ -25,9 +25,14 @@ function NavBar() {
           <Link to="/rate">Rate</Link>
         </li>
         {currentUser ? (
-          <li>
-            <button onClick={handleSignOut}>Sign Out</button>
-          </li>
+          <>
+            <li>
+              <Link to="/profile">Profile</Link>
+            </li>
+            <li>
+              <button onClick={handleSignOut}>Sign Out</button>
+            </li>
+          </>
         ) : (
           <>
             <li>
