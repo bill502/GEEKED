@@ -21,9 +21,6 @@ function NavBar() {
         <li>
           <Link to="/search">Search</Link>
         </li>
-        <li>
-          <Link to="/rate">Rate</Link>
-        </li>
         {currentUser ? (
           <>
             <li>

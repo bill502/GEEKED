@@ -27,10 +27,28 @@ const SEARCH_ANIME = gql`
 function AnimeSearch({ ratings, setRatings }) {
   const [search, setSearch] = useState('');
   const [selectedAnime, setSelectedAnime] = useState(null);
-  const { loading, error, data } = useQuery(SEARCH_ANIME, {
+  const [fetchError, setFetchError] = useState('');
+  const { loading, error, data, refetch } = useQuery(SEARCH_ANIME, {
     variables: { search },
     skip: !search,
   });
+
+  useEffect(() => {
+    if (error) {
+      setFetchError('Failed to fetch data. Please try again.');
+    } else {
+      setFetchError('');
+    }
+  }, [error]);
+
+  useEffect(() => {
+    const savedRatings = JSON.parse(localStorage.getItem('animeRatings')) || [];
+    setRatings(savedRatings);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('animeRatings', JSON.stringify(ratings));
+  }, [ratings]);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -60,8 +78,8 @@ function AnimeSearch({ ratings, setRatings }) {
             onChange={handleSearch}
           />
           {loading && <p>Loading...</p>}
-          {error && <p>Error: {error.message}</p>}
-          {data && (
+          {fetchError && <p>{fetchError}</p>}
+          {data && !fetchError && (
             <div className="anime-container">
               <div className="anime-grid">
                 {data.Page.media.length > 0 ? (
