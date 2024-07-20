@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';  // Ensure this import is here to apply the styles
 
+// Component to display detailed information about a selected anime
 function AnimeDetail({ anime, onBack }) {
   return (
     <div className="AnimeDetail">

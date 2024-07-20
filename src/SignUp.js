@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { auth } from './firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import './Profile.css';  // Import shared styles
 
 function SignUp() {
   const [email, setEmail] = useState('');
@@ -20,7 +21,7 @@ function SignUp() {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Sign Up</h2>
       <form onSubmit={handleSignUp}>
         <input
