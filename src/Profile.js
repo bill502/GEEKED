@@ -43,6 +43,9 @@ function Profile({ ratings, setRatings }) {
     return <p>Loading...</p>;
   }
 
+  // Sort ratings by rating value
+  const sortedRatings = [...ratings].sort((a, b) => b.rating - a.rating);
+
   return (
     <div className="Profile">
       <h2>Profile</h2>
@@ -60,10 +63,10 @@ function Profile({ ratings, setRatings }) {
 
       <div className="ratings-section">
         <h3>Your Rated Anime</h3>
-        {ratings.length > 0 ? (
-          <ul>
-            {ratings.map(r => (
-              <li key={r.anime.id}>
+        {sortedRatings.length > 0 ? (
+          <div className="anime-grid">
+            {sortedRatings.map(r => (
+              <div key={r.anime.id} className="anime-card">
                 <h4>{r.anime.title.romaji || r.anime.title.english}</h4>
                 <img src={r.anime.coverImage.large} alt={r.anime.title.romaji} />
                 <p>Rating: {r.rating}</p>
@@ -74,9 +77,9 @@ function Profile({ ratings, setRatings }) {
                   placeholder="Update rating out of 100"
                 />
                 <button onClick={() => handleRemoveAnime(r.anime.id)}>Remove</button>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         ) : (
           <p>No rated anime found.</p>
         )}

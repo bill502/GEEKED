@@ -1,108 +1,105 @@
 /* Profile page styles */
 .Profile {
-    text-align: left;
-    background-color: #444; /* Darker background for profile */
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    color: #e0e0e0;
-  }
-  
-  .Profile h2 {
-    text-align: center;
-    color: #61dafb;
-  }
-  
-  .Profile form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .Profile input {
-    width: 300px; /* Set a fixed width for inputs */
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #444;
-    color: #e0e0e0;
-  }
-  
-  .Profile button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #61dafb;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .Profile button:hover {
-    background-color: #21a1f1;
-  }
-  
-  .Profile p {
-    font-size: 1rem;
-    margin: 10px 0;
-    text-align: center;
-  }
-  
-  /* Ratings section styles */
-  .ratings-section {
-    margin-top: 20px;
-  }
-  
-  .ratings-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .ratings-section li {
-    background-color: #333;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #e0e0e0;
-  }
-  
-  .ratings-section h4 {
-    margin: 0 0 10px 0;
-  }
-  
-  .ratings-section img {
-    width: 100px;
-    height: auto;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .ratings-section input {
-    width: 100px;
-    padding: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #333;
-    color: #e0e0e0;
-    text-align: center;
-  }
-  
-  .ratings-section button {
-    padding: 5px 10px;
-    font-size: 0.9rem;
-    background-color: #61dafb;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .ratings-section button:hover {
-    background-color: #21a1f1;
-  }
-  
+  text-align: left;
+  background-color: #444; /* Darker background for profile */
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 1200px; /* Adjusted to fit more content */
+  color: #e0e0e0;
+}
+
+.Profile h2 {
+  text-align: center;
+  color: #61dafb;
+}
+
+.Profile form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Profile input {
+  width: 300px; /* Set a fixed width for inputs */
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background-color: #444;
+  color: #e0e0e0;
+}
+
+.Profile button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Profile button:hover {
+  background-color: #21a1f1;
+}
+
+.Profile p {
+  font-size: 1rem;
+  margin: 10px 0;
+  text-align: center;
+}
+
+/* Ratings section styles */
+.ratings-section {
+  margin-top: 20px;
+}
+
+.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Display 5 items per row */
+  gap: 20px;
+}
+
+.anime-card {
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  color: #e0e0e0;
+}
+
+.anime-card h4 {
+  margin: 0 0 10px 0;
+}
+
+.anime-card img {
+  width: 100px;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.anime-card input {
+  width: 60px;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background-color: #333;
+  color: #e0e0e0;
+  text-align: center;
+}
+
+.anime-card button {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.anime-card button:hover {
+  background-color: #21a1f1;
+}
