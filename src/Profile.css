@@ -55,10 +55,10 @@
   margin-top: 20px;
 }
 
-.anime-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Display 5 items per row */
-  gap: 20px;
+.anime-row {
+  display: flex;
+  justify-content: space-around; /* Adjust spacing between cards */
+  margin-bottom: 20px;
 }
 
 .anime-card {
@@ -67,6 +67,7 @@
   border-radius: 5px;
   text-align: center;
   color: #e0e0e0;
+  width: 18%; /* Adjust width to fit 5 cards in a row */
 }
 
 .anime-card h4 {

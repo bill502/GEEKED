@@ -1,15 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './AnimeDetail.css';
 
-function AnimeDetail({ anime, onBack, ratings, setRatings }) {
+function AnimeDetail({ animeId, onBack, ratings, setRatings }) {
+  const [anime, setAnime] = useState(null);
   const [rating, setRating] = useState('');
 
   useEffect(() => {
-    const existingRating = ratings.find(r => r.anime.id === anime.id);
+    axios.get(`http://localhost:3000/animes/${animeId}`)
+      .then(response => {
+        console.log('Anime details fetched:', response.data); // Log the anime details
+        setAnime(response.data);
+      })
+      .catch(error => {
+        console.error('Failed to fetch anime details:', error);
+      });
+  }, [animeId]);
+
+  useEffect(() => {
+    const existingRating = ratings.find(r => r.anime.id === animeId);
     if (existingRating) {
       setRating(existingRating.rating);
     }
-  }, [anime, ratings]);
+  }, [animeId, ratings]);
 
   const handleRatingChange = (e) => {
     setRating(e.target.value);
@@ -17,26 +30,37 @@ function AnimeDetail({ anime, onBack, ratings, setRatings }) {
 
   const saveRating = () => {
     const updatedRatings = [...ratings];
-    const existingIndex = updatedRatings.findIndex(r => r.anime.id === anime.id);
+    const existingIndex = updatedRatings.findIndex(r => r.anime.id === animeId);
 
     if (existingIndex >= 0) {
       updatedRatings[existingIndex].rating = Number(rating);
     } else {
-      updatedRatings.push({ anime, rating: Number(rating) });
+      updatedRatings.push({ 
+        anime: { 
+          id: animeId, 
+          title: anime.title, 
+          coverImage: anime.cover_image || anime.coverImage.large // Ensure coverImage is included
+        }, 
+        rating: Number(rating) 
+      });
     }
 
     setRatings(updatedRatings);
   };
 
+  if (!anime) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className="AnimeDetail">
       <button onClick={onBack}>Back</button>
       <h2>{anime.title.romaji || anime.title.english}</h2>
-      <img src={anime.coverImage.large} alt={anime.title.romaji} />
+      <img src={anime.cover_image || anime.coverImage.large} alt={anime.title.romaji || anime.title.english} />
       <p>{anime.description}</p>
       <p>Episodes: {anime.episodes}</p>
-      <p>Genres: {anime.genres.join(', ')}</p>
-      <p>Average Score: {anime.averageScore}</p>
+      <p>Genres: {Array.isArray(anime.genres) ? anime.genres.join(', ') : anime.genres}</p>
+      <p>Average Score: {anime.average_score || anime.averageScore}</p>
       
       <div className="rating-section">
         <input

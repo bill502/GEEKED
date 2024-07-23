@@ -1,45 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import axios from 'axios';
 import AnimeDetail from './AnimeDetail';
 import './AnimeSearch.css';
 
-const SEARCH_ANIME = gql`
-  query SearchAnime($search: String) {
-    Page(perPage: 10) {
-      media(search: $search, type: ANIME) {
-        id
-        title {
-          romaji
-          english
-        }
-        coverImage {
-          large
-        }
-        averageScore
-        description
-        episodes
-        genres
-      }
-    }
+// Function to search anime
+const fetchAnime = async (search) => {
+  try {
+    const response = await axios.get(`http://localhost:3000/search_anime?search=${search}`);
+    return response.data.data.Page.media;  // Adjusted to access the nested media array
+  } catch (error) {
+    throw new Error('Failed to fetch data. Please try again.');
   }
-`;
+};
 
 function AnimeSearch({ ratings, setRatings }) {
   const [search, setSearch] = useState('');
-  const [selectedAnime, setSelectedAnime] = useState(null);
+  const [selectedAnimeId, setSelectedAnimeId] = useState(null);
   const [fetchError, setFetchError] = useState('');
-  const { loading, error, data, refetch } = useQuery(SEARCH_ANIME, {
-    variables: { search },
-    skip: !search,
-  });
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  // Fetch data when search changes
   useEffect(() => {
-    if (error) {
-      setFetchError('Failed to fetch data. Please try again.');
-    } else {
-      setFetchError('');
+    if (search) {
+      setLoading(true);
+      fetchAnime(search)
+        .then((data) => {
+          setData(data);
+          setFetchError('');
+        })
+        .catch((error) => {
+          setFetchError(error.message);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
-  }, [error]);
+  }, [search]);
 
   useEffect(() => {
     const savedRatings = JSON.parse(localStorage.getItem('animeRatings')) || [];
@@ -61,10 +58,10 @@ function AnimeSearch({ ratings, setRatings }) {
 
   return (
     <div className="AnimeSearch">
-      {selectedAnime ? (
+      {selectedAnimeId ? (
         <AnimeDetail
-          anime={selectedAnime}
-          onBack={() => setSelectedAnime(null)}
+          animeId={selectedAnimeId}
+          onBack={() => setSelectedAnimeId(null)}
           ratings={ratings}
           setRatings={setRatings}
         />
@@ -79,23 +76,19 @@ function AnimeSearch({ ratings, setRatings }) {
           />
           {loading && <p>Loading...</p>}
           {fetchError && <p>{fetchError}</p>}
-          {data && !fetchError && (
+          {data.length > 0 && !fetchError && (
             <div className="anime-container">
               <div className="anime-grid">
-                {data.Page.media.length > 0 ? (
-                  data.Page.media.map((anime) => (
-                    <div key={anime.id} className="anime-card" onClick={() => setSelectedAnime(anime)}>
-                      <img src={anime.coverImage.large} alt={anime.title.romaji} />
-                      <div>
-                        <h3>{anime.title.romaji || anime.title.english}</h3>
-                        <p>Average Score: {anime.averageScore}</p>
-                        <p>Your Rating: {getRating(anime)}</p>
-                      </div>
+                {data.map((anime) => (
+                  <div key={anime.id} className="anime-card" onClick={() => setSelectedAnimeId(anime.id)}>
+                    <img src={anime.coverImage.large} alt={anime.title.romaji || anime.title.english} />
+                    <div>
+                      <h3>{anime.title.romaji || anime.title.english}</h3>
+                      <p>Average Score: {anime.averageScore}</p>
+                      <p>Your Rating: {getRating(anime)}</p>
                     </div>
-                  ))
-                ) : (
-                  <p>No results found</p>
-                )}
+                  </div>
+                ))}
               </div>
             </div>
           )}
