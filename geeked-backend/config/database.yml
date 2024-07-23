@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV['POSTGRES_USERNAME'] || 'missing username' %>
+  password: <%= ENV['POSTGRES_PASSWORD'] || 'missing password' %>
+  host: localhost
+
+development:
+  <<: *default
+  database: geeked_backend_development
+
+test:
+  <<: *default
+  database: geeked_backend_test
+
+production:
+  <<: *default
+  database: geeked_backend_production
+  username: geeked_backend
+  password: <%= ENV['GEEKED_BACKEND_DATABASE_PASSWORD'] %>
